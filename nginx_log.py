@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 import string
 import os
@@ -65,22 +66,41 @@ def read_file(filename):
 					u_time = each_line.split(SEP)[u_time_b]
 					user_time = each_line.split(SEP)[user_time_b]
 					host_name = each_line.split(SEP)[host_name_b]
-					print user_ip 
-					print host_name 
+#					print user_ip 
+#					print host_name 
 				except ValueError:
 					print "Separation of the %s is error, please modify the separation to be %s" %(SF, SEP)
 	except IOError as err:
 		print ('File error: '+ str(err))
 
 
-#def getMark():
-#	BCD=options.BCD
-#	
-#
-#
+def getMark():
+	if options.BCD:
+		BCD = options.BCD
+		back_code_num = re.search("[0-9]{3}", BCD).group(0)
+		back_code_cou = re.search('[a,b,e,n]', BCD).group(0)
+	
+	if options.UCD:
+		UCD = options.UCD
+		user_code_num = re.search("[0-9]{3}", UCD).group(0)
+		user_code_cou = re.search('[a,b,e,n]', UCD).group(0)
+
+	IP_PAT = '^([01]?\d\d?|2[0-4]\d|25[0-5])\.([01]?\d\d?|2[0-4]\d|25[0-5])\.([01]?\d\d?|2[0-4]\d|25[0-5])\.([01]?\d\d?|2[0-4]\d|25[0-5])$'
+	regex = re.compile(IP_PAT)
+
+	if options.UIP:
+		UIP = options.UIP
+		u_ip = regex.findall(UIP) 
+
+	if options.BIP:
+		BIP = options.BIP
+		b_ip = regex.findall(BIP) 
+
+
 #def analysis():
 	
 
 
 if __name__ == "__main__":
 	read_file(SF)
+	getMark()
