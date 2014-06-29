@@ -68,6 +68,25 @@ def read_file(filename):
 					host_name = each_line.split(SEP)[host_name_b]
 #					print user_ip 
 #					print host_name 
+					
+					post_data = []
+					if options.URL:
+						post_data.append(options.URL)
+
+					if options.UIP:
+						post_data.append(options.UIP)
+
+					if options.REFER:
+						post_data.append(options.REFER)
+
+					if options.BIP:
+						post_data.append(options.BIP)
+
+					if options.BCD:
+						post_data.append(options.BCD)
+
+
+
 				except ValueError:
 					print "Separation of the %s is error, please modify the separation to be %s" %(SF, SEP)
 	except IOError as err:
@@ -85,16 +104,16 @@ def getMark():
 		user_code_num = re.search("[0-9]{3}", UCD).group(0)
 		user_code_cou = re.search('[a,b,e,n]', UCD).group(0)
 
-	IP_PAT = '^([01]?\d\d?|2[0-4]\d|25[0-5])\.([01]?\d\d?|2[0-4]\d|25[0-5])\.([01]?\d\d?|2[0-4]\d|25[0-5])\.([01]?\d\d?|2[0-4]\d|25[0-5])$'
+	IP_PAT = '((((1?\d?\d)|(2[0-5][0-5]))\.){3}((1?\d?\d)|(2[0-5][0-5])))'
 	regex = re.compile(IP_PAT)
 
 	if options.UIP:
 		UIP = options.UIP
-		u_ip = regex.findall(UIP) 
+		u_ip = re.search(regex, UIP).group(0) 
 
 	if options.BIP:
 		BIP = options.BIP
-		b_ip = regex.findall(BIP) 
+		b_ip = re.search(regex, BIP).group(0)
 
 
 #def analysis():
